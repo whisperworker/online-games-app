@@ -6,6 +6,13 @@ First, install dependencies:
 npm install
 ```
 
+Before run the application you need to install dependencies and run server: 
+```bash
+cd ../softswiss-app-backend/
+npm install
+node server.js
+```
+
 Then, run the development server:
 
 ```bash
