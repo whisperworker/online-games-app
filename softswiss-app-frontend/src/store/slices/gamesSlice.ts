@@ -36,5 +36,3 @@ export const gamesSlice = createSlice({
     },
   },
 });
-
-export const { setFilteredGames } = gamesSlice.actions;
