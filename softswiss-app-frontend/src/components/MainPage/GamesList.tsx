@@ -35,6 +35,11 @@ const GamesList = () => {
     }
   };
 
+  const renderGames = (games) =>
+    games
+      .slice(0, loadMoreGames)
+      .map((game) => <GameItem key={game.title} game={game} />);
+
   useEffect(() => {
     dispatch(fetchGames());
   }, []);
@@ -47,34 +52,32 @@ const GamesList = () => {
           <div className={styles.grid}>
             {filteredGames ? (
               filteredGames.length ? (
-                filteredGames
-                  .slice(0, loadMoreGames)
-                  .map((game) => <GameItem key={game.title} game={game} />)
+                renderGames(filteredGames)
               ) : (
                 <div>Игр не найдено</div>
               )
             ) : (
-              games
-                .slice(0, loadMoreGames)
-                .map((game) => <GameItem key={game.title} game={game} />)
+              renderGames(games)
             )}
           </div>
         </>
       )}
-      {error && <div>{error}</div>}
       {isLoading && (
         <div className={styles.loaderContainer}>
           <UiLoader />
         </div>
       )}
-      <div className={styles.buttonContainer}>
-        {filteredGames && filteredGames?.length >= loadMoreGames && (
-          <UiButton onClick={handleShowMore}>Показать еще</UiButton>
-        )}
-        {games && !filteredGames && games?.length >= loadMoreGames && (
-          <UiButton onClick={handleShowMore}>Показать еще</UiButton>
-        )}
-      </div>
+      {error && <div>{error}</div>}
+      {!isLoading && (
+        <div className={styles.buttonContainer}>
+          {filteredGames && filteredGames?.length >= loadMoreGames && (
+            <UiButton onClick={handleShowMore}>Показать еще</UiButton>
+          )}
+          {games && !filteredGames && games?.length >= loadMoreGames && (
+            <UiButton onClick={handleShowMore}>Показать еще</UiButton>
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -91,10 +94,9 @@ function GameItem({ game }: GameItemProps) {
       <Image
         src={game.gameImageUrl}
         alt="logo"
-        width={0}
-        height={0}
-        sizes="150vw"
-        style={{ width: "100%", height: "auto" }}
+        width={300}
+        height={200}
+        layout="responsive"
       />
       <h2>{game.title}</h2>
     </Link>
