@@ -11,7 +11,7 @@ type Props = {
 const UiButton: React.FC<Props> = ({ className, children, onClick }) => {
   return (
     <button
-      className={clsx(styles.UiButton, className ? className : "")}
+      className={clsx(styles.UiButton, className ?? "")}
       onClick={onClick}
     >
       {children}
