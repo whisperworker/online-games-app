@@ -7,15 +7,17 @@ app.use(cors())
 
 
 app.get('/api/games', (req, res, next) => {
-    const convertedResult = Object.keys(data).map((gameKey) => ({
-        gameKey,
-        gameImageUrl: `https://cdn2.softswiss.net/i/s2/${gameKey}.png`,
-        ...data[gameKey],
-    }));
-    convertedResult.sort(
-        (a, b) => a.collections.popularity - b.collections.popularity,
-    );
-    res.json(convertedResult)
+    setTimeout(() => {
+        const convertedResult = Object.keys(data).map((gameKey) => ({
+            gameKey,
+            gameImageUrl: `https://cdn2.softswiss.net/i/s2/${gameKey}.png`,
+            ...data[gameKey],
+        }));
+        convertedResult.sort(
+            (a, b) => a.collections.popularity - b.collections.popularity,
+        );
+        res.json(convertedResult)
+    }, 1000)
 })
 
 

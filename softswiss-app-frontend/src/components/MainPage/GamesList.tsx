@@ -41,7 +41,7 @@ const GamesList = () => {
 
   return (
     <div>
-      {games && (
+      {!isLoading && games && (
         <>
           <GamesFilter games={games} onFiltersChange={handleChangeFilters} />
           <div className={styles.grid}>
