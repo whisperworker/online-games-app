@@ -17,22 +17,25 @@ const initialState: GamesState = {
 export const gamesSlice = createSlice({
   name: "games",
   initialState,
-  reducers: Object.create({}),
-  extraReducers: {
-    [fetchGames.fulfilled.type]: (
-      state: GamesState,
-      action: PayloadAction<Array<IGameInfo>>,
-    ) => {
-      state.isLoading = false;
-      state.games = action.payload;
-      state.error = "";
-    },
-    [fetchGames.pending]: (state: GamesState) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchGames.fulfilled.type,
+      (state: GamesState, action: PayloadAction<Array<IGameInfo>>) => {
+        state.isLoading = false;
+        state.games = action.payload;
+        state.error = "";
+      },
+    );
+    builder.addCase(fetchGames.pending.type, (state: GamesState) => {
       state.isLoading = true;
-    },
-    [fetchGames.rejected]: (state: GamesState, action: Array<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    });
+    builder.addCase(
+      fetchGames.rejected.type,
+      (state: GamesState, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+    );
   },
 });

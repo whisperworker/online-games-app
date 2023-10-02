@@ -10,10 +10,10 @@ type Props = {
 
 const GamesFilter: React.FC<Props> = ({ games, onFiltersChange }) => {
   const gameReal = games.map((game) => Object.keys(game.real));
-  const gameCurrencies = [...new Set<string>([].concat(...gameReal))];
-  const gameProviders = [
-    ...new Set<string>(games.map((game) => game.provider)),
-  ];
+  const gameCurrencies = Array.from(new Set(gameReal.flat(2)));
+  const gameProviders = Array.from(
+    new Set<string>(games.map((game) => game.provider)),
+  );
   const [filters, setFilters] = useState(() => ({
     currency: "",
     provider: "",

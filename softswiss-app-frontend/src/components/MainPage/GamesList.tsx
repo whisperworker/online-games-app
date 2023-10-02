@@ -17,7 +17,9 @@ const GamesList = () => {
     (reduxState: RootState) => reduxState.gamesReducer,
   );
   const dispatch = useAppDispatch();
-  const [filteredGames, setFilteredGames] = useState<Array<IGameInfo>>(null);
+  const [filteredGames, setFilteredGames] = useState<Array<IGameInfo> | null>(
+    null,
+  );
   const [loadMoreGames, setLoadMoreGames] = useState(12);
 
   const handleShowMore = () => {
@@ -94,9 +96,10 @@ function GameItem({ game }: GameItemProps) {
       <Image
         src={game.gameImageUrl}
         alt="logo"
-        width={300}
-        height={200}
-        layout="responsive"
+        width={0}
+        height={0}
+        sizes="150vw"
+        style={{ width: "100%", height: "auto" }}
       />
       <h2>{game.title}</h2>
     </Link>
