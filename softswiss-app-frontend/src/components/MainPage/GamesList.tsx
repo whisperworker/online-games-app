@@ -9,15 +9,15 @@ import GamesFilter from "../GamesFilter";
 import { IGameInfo } from "../../models/IGames";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import UiButton from "../uikit/UiButton/UiButton";
-import { setFilteredGames } from "../../store/slices/gamesSlice";
 import { applyFilters } from "../../shared/helpers/setFilters";
 import UiLoader from "../uikit/UiLoader/UiLoader";
 
 const GamesList = () => {
-  const { games, filteredGames, error, isLoading } = useAppSelector(
+  const { games, error, isLoading } = useAppSelector(
     (reduxState: RootState) => reduxState.gamesReducer,
   );
   const dispatch = useAppDispatch();
+  const [filteredGames, setFilteredGames] = useState<Array<IGameInfo>>(null);
   const [loadMoreGames, setLoadMoreGames] = useState(12);
 
   const handleShowMore = () => {
@@ -26,10 +26,10 @@ const GamesList = () => {
 
   const handleChangeFilters = (filters) => {
     if (filters.currency || filters.provider) {
-      const filteredGames = applyFilters(games, filters);
-      dispatch(setFilteredGames(filteredGames));
+      setFilteredGames(applyFilters(games, filters));
       setLoadMoreGames(12);
     } else {
+      setFilteredGames(null);
       setLoadMoreGames(12);
       dispatch(fetchGames());
     }
